@@ -1,0 +1,48 @@
+
+entity Solicitud {
+	nroDocumento String
+	asunto String required
+}
+
+entity Movimiento {
+	orden Integer
+	sumilla String required
+}
+
+entity Actor {
+	orden Integer
+}
+
+entity Dependencia {
+	nombre String required
+    abreviatura String
+}
+
+entity Compendio {
+	nombre String required
+    abreviatura String
+}
+
+entity Archivo {
+	archivo Blob
+}
+
+relationship OneToMany {
+	Solicitud to Movimiento{solicitud}
+    Movimiento to Actor{movimiento}
+    Movimiento to Archivo{movimiento}
+  	Dependencia to Movimiento{dependenciaOrigen}
+    Dependencia to Movimiento{dependenciaDestino}
+	Compendio to Compendio{compendio}
+    Solicitud to Compendio{tramite}
+    Solicitud to Compendio{tipoDocumento}
+}
+
+
+paginate Solicitud, Movimiento, Actor, 
+Dependencia, Compendio, Archivo with pagination
+
+dto * with mapstruct
+
+
+service all with serviceImpl
